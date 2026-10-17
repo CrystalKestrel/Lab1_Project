@@ -8,9 +8,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: flaskapp
+    #defaults:
+    #  run:
+    #    working-directory: flaskapp
 
     steps:
       - uses: actions/checkout@v4
