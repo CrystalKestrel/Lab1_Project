@@ -60,7 +60,6 @@ import os
 # подключаем наш модуль и переименовываем
 # для исключения конфликта имен
 import net as neuronet
-#from . import net as neuronet
 # метод обработки запроса GET и POST от клиента
 @app.route("/net",methods=['GET', 'POST'])
 def net():
