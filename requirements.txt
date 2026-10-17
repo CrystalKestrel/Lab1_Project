@@ -4,6 +4,6 @@ requests
 flask-bootstrap
 flask-wtf
 pillow
-tensorflow==2.20.0
-keras
+#tensorflow==2.20.0
+#keras
 lxml

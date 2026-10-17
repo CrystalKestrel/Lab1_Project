@@ -59,7 +59,7 @@ from werkzeug.utils import secure_filename
 import os
 # подключаем наш модуль и переименовываем
 # для исключения конфликта имен
-import net as neuronet
+#import net as neuronet
 # метод обработки запроса GET и POST от клиента
 @app.route("/net",methods=['GET', 'POST'])
 def net():
@@ -72,13 +72,7 @@ def net():
  if form.validate_on_submit():
   # файлы с изображениями читаются из каталога static
   filename = os.path.join('static', secure_filename(form.upload.data.filename))
-  fcount, fimage = neuronet.read_image_files(10, 'static')
-  # передаем все изображения в каталоге на классификацию
-  # можете изменить немного код и передать только загруженный файл
-  decode = neuronet.getresult(fimage)
-  # записываем в словарь данные классификации
-  for elem in decode:
-   neurodic[elem[0][1]] = elem[0][2]
+
   # сохраняем загруженный файл
   form.upload.data.save(filename)
  # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
@@ -87,32 +81,15 @@ def net():
 
 from flask import request
 from flask import Response
-import base64
-from PIL import Image
-from io import BytesIO
+
 import json
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
 def apinet():
  neurodic = {}
  # проверяем, что в запросе json данные
- if request.mimetype == 'application/json':
-  # получаем json данные
-  data = request.get_json()
-  # берем содержимое по ключу, где хранится файл
-  # закодированный строкой base64
-  # декодируем строку в массив байт, используя кодировку utf-8
-  # первые 128 байт ascii и utf-8 совпадают, потому можно
-  filebytes = data['imagebin'].encode('utf-8')
-  # декодируем массив байт base64 в исходный файл изображение
-  cfile = base64.b64decode(filebytes)
-  # чтобы считать изображение как файл из памяти, используем BytesIO
-  img = Image.open(BytesIO(cfile))
-  decode = neuronet.getresult([img])
-  neurodic = {}
-  for elem in decode:
-   neurodic[elem[0][1]] = str(elem[0][2])
-   print(elem)
+
+
   # пример сохранения переданного файла
   # handle = open('./static/f.png','wb')
   # handle.write(cfile)
